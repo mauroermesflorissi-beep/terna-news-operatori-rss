@@ -58,6 +58,14 @@ def main():
 
     now = datetime.now(timezone.utc)
 
+        # Se non ci sono news, aggiungiamo un item "segnaposto" così Inoreader può agganciare il feed
+    if not clean:
+        fe = fg.add_entry()
+        fe.title("Nessuna news disponibile al momento (feed attivo)")
+        fe.link(href=LIST_URL)
+        fe.guid("placeholder-" + LIST_URL, permalink=False)
+        fe.published(now)
+
     for title, url in clean[:50]:
         pub = None
         try:
